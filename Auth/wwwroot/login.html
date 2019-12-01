@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="JS/jquery/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#subbtn").click(function () {
+                $.ajax({
+                    url: 'connect/token',
+                    method: 'POST',
+                    data: {
+                        username: $("#uname").val(),
+                        password: $("#pwd").val(),
+                        grant_type: 'password',
+                        client_id: 'pwdClient',
+                        client_secret: 'secret'
+                    },
+                    success: function (resp) {
+                        alert(JSON.stringify(resp));
+                    },
+                    error: function (resp)
+                    {
+                        alert(JSON.stringify(resp));
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div>
+        <input type="text" id="uname" name="username" />
+        <input type="password" id="pwd" name="password" />
+        <input type="button" id="subbtn" value="登录" />
+    </div>
+</body>
+</html>

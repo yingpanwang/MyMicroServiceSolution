@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Auth</name>
+    </assembly>
+    <members>
+        <member name="T:Auth.Configs.IdentityServer.IdentityServerConfig">
+            <summary>
+            IdentityServer配置
+            </summary>
+        </member>
+        <member name="M:Auth.Configs.IdentityServer.IdentityServerConfig.GetIdentityResourceResources">
+            <summary>
+            获取资源
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Auth.Controllers.HomeController">
+            <summary>
+            Home
+            </summary>
+        </member>
+        <member name="M:Auth.Controllers.HomeController.Get">
+            <summary>
+            基本请求
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

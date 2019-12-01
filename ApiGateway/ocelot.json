@@ -1,0 +1,137 @@
+{
+  "GlobalConfiguration": 
+  {
+    //外部访问路径 
+    "BaseUrl": "http://localhost:65054"
+    //熔断配置
+    //"QoSOptions": {
+    //  "ExceptionsAllowedBeforeBreaking": 3,
+    //  "DurationOfBreak": 5,
+    //  //超时值(毫秒) 
+    //  "TimeoutValue": 5000
+    //},
+    //限速配置
+    //"RateLimitOptions": { //白名单 "ClientWhitelist": [], "EnableRateLimiting": true,
+    //  //限制时间段，例如1s，5m，1h，1d 
+    //  "Period": "1s",
+    //  //重试等待的时间间隔（秒） 
+    //  "PeriodTimespan": 1,
+    //  //限制 
+    //  "Limit": 1,
+    //  //自定义消息 
+    //  "QuotaExceededMessage": "单位时间内请求次数超过限制！",
+    //  "HttpStatusCode": 999
+    //}
+  },
+  "ReRoutes": [
+    // Auth文档
+    {
+      "DownstreamPathTemplate": "/AuthApi/swagger.json",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/AuthApi/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/WebClient1/swagger.json",
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/WebClient1/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 62781
+        }
+      ]
+    },
+    // 授权中心配置
+    {
+      // 下游请求模板
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      // "下游服务的地址"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/auth/{url}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ]
+    },
+    // 授权中心配置
+    {
+      // 下游请求模板
+      "DownstreamPathTemplate": "/connect/token",
+      "DownstreamScheme": "http",
+      // "下游服务的地址"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/user/login",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    },
+    // Swagger请求 配置
+    {
+      // 下游请求模板
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      // "下游服务的地址"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 62781
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{url}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ],
+      //启用权限认证
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityBearer",
+        "AllowedScopes": []
+      }
+    },
+    // WebClient1 配置
+    {
+      // 下游请求模板
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      // "下游服务的地址"
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 62781
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/web/{url}",
+      "UpstreamHttpMethod": [
+        "Get",
+        "Post"
+      ],
+      "UpstreamHeaderTransform": {
+        "X-Gateway": "Test"
+      },
+      //启用权限认证
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IdentityBearer",
+        "AllowedScopes": []
+      }
+    }
+  ]
+}
