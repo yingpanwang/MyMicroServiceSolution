@@ -14,6 +14,7 @@ namespace Auth.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
+            Console.WriteLine("测试");
             return new string[] { "value1", "value2" };
         }
 
