@@ -20,6 +20,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
 using NLog.Extensions.Logging;
 using Repositories;
+using Auth.Extensions;
 
 namespace Auth
 {
@@ -91,13 +92,17 @@ namespace Auth
 
             #endregion
 
+            #region 服务发现
+
+            #endregion
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             return RegisterAutofac(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory,IApplicationLifetime lifetime,IConfiguration configuration)
         {
             if (env.IsDevelopment())
             {
@@ -105,6 +110,11 @@ namespace Auth
             }
             // 添加NLog
             loggerFactory.AddNLog();
+            //app.RegisterConsul(lifetime, configuration);
+            app.RegisterConsul(lifetime,opt=> 
+            {
+                opt.ServiceName = "";
+            });
             app.UseStaticFiles();
             app.UseSwagger(c=>c.RouteTemplate = "{documentName}/swagger.json");
             app.UseSwaggerUI(c=> 

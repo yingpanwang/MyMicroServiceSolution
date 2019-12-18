@@ -12,9 +12,9 @@ namespace Auth.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return  "这里是授权服务器Auth";
         }
 
         // GET api/values/5
