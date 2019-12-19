@@ -111,10 +111,7 @@ namespace Auth
             // 添加NLog
             loggerFactory.AddNLog();
             //app.RegisterConsul(lifetime, configuration);
-            app.RegisterConsul(lifetime,opt=> 
-            {
-                opt.ServiceName = "";
-            });
+            app.RegisterConsul(lifetime,configuration);
             app.UseStaticFiles();
             app.UseSwagger(c=>c.RouteTemplate = "{documentName}/swagger.json");
             app.UseSwaggerUI(c=> 

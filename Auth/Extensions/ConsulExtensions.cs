@@ -73,7 +73,7 @@ namespace Auth.Extensions
     }
 
     /// <summary>
-    /// consul扩展
+    /// consul扩展(通过配置文件配置)
     /// </summary>
     public static class ConsulExtensions
     {
@@ -93,7 +93,7 @@ namespace Auth.Extensions
         }
 
         /// <summary>
-        /// 注册consul
+        /// 注册consul(通过配置opt对象配置)
         /// </summary>
         /// <param name="app"></param>
         /// <param name="life">引用生命周期</param>
@@ -133,12 +133,11 @@ namespace Auth.Extensions
                     Checks = new[] { httpCheck },
                     ID = Guid.NewGuid().ToString(),
                     Name = serviceOptions.ServiceName,
-                    Address = $"{serviceOptions.Scheme}://{serviceOptions.ServiceIP}",
+                    Address =serviceOptions.ServiceIP,
                     Port = serviceOptions.Port,
                 };
 
                 consulClient.Agent.ServiceRegister(registration).Wait();
-
 
                 life.ApplicationStopping.Register(() =>
                 {

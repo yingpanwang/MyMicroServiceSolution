@@ -1,15 +1,22 @@
 {
-  "GlobalConfiguration": 
-  {
-    //外部访问路径 
-    "BaseUrl": "http://localhost:65054"
+  "GlobalConfiguration": {
+    //外部访问路径
+    "BaseUrl": "http://localhost:64890",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500
+    },
     //熔断配置
-    //"QoSOptions": {
-    //  "ExceptionsAllowedBeforeBreaking": 3,
-    //  "DurationOfBreak": 5,
-    //  //超时值(毫秒) 
-    //  "TimeoutValue": 5000
-    //},
+    "QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking": 3,
+      "DurationOfBreak": 5,
+      //超时值(毫秒) 
+      "TimeoutValue": 5000
+    },
+    "LoadBalanceOptions": {
+      "Type": "RoundRobin"
+    },
+    "DownstreamScheme": "http"
     //限速配置
     //"RateLimitOptions": { //白名单 "ClientWhitelist": [], "EnableRateLimiting": true,
     //  //限制时间段，例如1s，5m，1h，1d 
@@ -50,35 +57,37 @@
       ]
     },
     // 授权中心配置
-    {
-      // 下游请求模板
-      "DownstreamPathTemplate": "/api/{url}",
-      "DownstreamScheme": "http",
-      // "下游服务的地址"
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5000
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/auth/{url}",
-      "UpstreamHttpMethod": [
-        "Get",
-        "Post"
-      ]
-    },
+    //{
+    //  // 下游请求模板
+    //  "DownstreamPathTemplate": "/api/{url}",
+    //  "DownstreamScheme": "http",
+    //  // "下游服务的地址"
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 5000
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/gateway/auth/{url}",
+    //  "UpstreamHttpMethod": [
+    //    "Get",
+    //    "Post"
+    //  ]
+    //},
     // 授权中心配置
     {
       // 下游请求模板
       "DownstreamPathTemplate": "/connect/token",
       "DownstreamScheme": "http",
       // "下游服务的地址"
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5000
-        }
-      ],
+      //"DownstreamHostAndPorts": [
+      //  {
+      //    "Host": "localhost",
+      //    "Port": 5000
+      //  }
+      //],
+      "ServiceName": "AuthCenter",
+      "UseServiceDiscovery": true,
       "UpstreamPathTemplate": "/gateway/user/login",
       "UpstreamHttpMethod": [
         "Post"

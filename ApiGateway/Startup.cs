@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Consul;
+using Ocelot.ServiceDiscovery;
 using Polly;
 using Ocelot.Provider.Polly;
 using Microsoft.Extensions.PlatformAbstractions;
@@ -19,6 +21,7 @@ using IdentityServer4.AccessTokenValidation;
 using Ocelot.Administration;
 using Microsoft.AspNetCore.Http;
 using IdentityServer4.Models;
+using Ocelot.Provider.Consul;
 
 namespace ApiGateway
 {
@@ -66,8 +69,10 @@ namespace ApiGateway
             });
 
             #endregion
+            
             services
                 .AddOcelot(Configuration)
+                .AddConsul()
                 .AddPolly();
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -80,6 +85,7 @@ namespace ApiGateway
             {
                 app.UseDeveloperExceptionPage();
             }
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
