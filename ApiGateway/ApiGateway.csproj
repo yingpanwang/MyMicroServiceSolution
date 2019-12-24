@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>\ApiGateway\ApiGateway.xml</DocumentationFile>
+    <DocumentationFile>\MyMicroServiceSolution\ApiGateway\ApiGateway.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,11 +14,11 @@
 
   <ItemGroup>
     <PackageReference Include="Consul" Version="0.7.2.6" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="2.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Include="Ocelot" Version="13.5.1" />
-    <PackageReference Include="Ocelot.Administration" Version="13.5.1" />
     <PackageReference Include="Ocelot.Provider.Consul" Version="13.5.1" />
     <PackageReference Include="Ocelot.Provider.Polly" Version="13.5.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="4.0.1" />

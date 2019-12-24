@@ -70,7 +70,7 @@ namespace Auth
 
             #region IdentityServer
 
-            services.AddIdentityServer()
+            services.AddIdentityServer(opt=> { opt.IssuerUri = "http://localhost:64889"; })
               .AddDeveloperSigningCredential()
               .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResourceResources())
               .AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
@@ -92,10 +92,6 @@ namespace Auth
 
             #endregion
 
-            #region 服务发现
-
-            #endregion
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             return RegisterAutofac(services);
@@ -110,7 +106,6 @@ namespace Auth
             }
             // 添加NLog
             loggerFactory.AddNLog();
-            //app.RegisterConsul(lifetime, configuration);
             app.RegisterConsul(lifetime,configuration);
             app.UseStaticFiles();
             app.UseSwagger(c=>c.RouteTemplate = "{documentName}/swagger.json");

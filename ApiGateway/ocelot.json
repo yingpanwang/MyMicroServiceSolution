@@ -83,7 +83,7 @@
       //"DownstreamHostAndPorts": [
       //  {
       //    "Host": "localhost",
-      //    "Port": 5000
+      //    "Port": 64889
       //  }
       //],
       "ServiceName": "AuthCenter",
@@ -111,10 +111,10 @@
         "Post"
       ],
       //启用权限认证
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityBearer",
-        "AllowedScopes": []
-      }
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IdentityBearer",
+      //  "AllowedScopes": []
+      //}
     },
     // WebClient1 配置
     {
@@ -125,7 +125,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 62781
+          "Port": 64885
         }
       ],
       "UpstreamPathTemplate": "/gateway/web/{url}",
@@ -133,9 +133,7 @@
         "Get",
         "Post"
       ],
-      "UpstreamHeaderTransform": {
-        "X-Gateway": "Test"
-      },
+      "Priority": 2,
       //启用权限认证
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "IdentityBearer",

@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.IdentityModel.Logging;
 
 namespace WebClient1
 {
@@ -38,14 +39,6 @@ namespace WebClient1
                 var xmlPath = Path.Combine(basePath, "WebClient1.xml");
                 opt.IncludeXmlComments(xmlPath);
             });
-            //services
-            //    .AddAuthentication("IdentityBearer")
-            //    .AddIdentityServerAuthentication(options =>
-            //    {
-            //        options.Authority = "http://localhost:5000";
-            //        options.RequireHttpsMetadata = false;
-            //        options.ApiName = "api1";
-            //    });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -61,7 +54,6 @@ namespace WebClient1
             {
                 c.SwaggerEndpoint("/WebClient1/swagger.json", "WebClient1");
             });
-            // app.UseAuthentication();
             app.UseMvc();
         }
     }

@@ -18,9 +18,7 @@ using Ocelot.Provider.Polly;
 using Microsoft.Extensions.PlatformAbstractions;
 using System.IO;
 using IdentityServer4.AccessTokenValidation;
-using Ocelot.Administration;
 using Microsoft.AspNetCore.Http;
-using IdentityServer4.Models;
 using Ocelot.Provider.Consul;
 
 namespace ApiGateway
@@ -49,15 +47,22 @@ namespace ApiGateway
                 opt.IncludeXmlComments(xmlPath);
             });
 
-            Action<IdentityServerAuthenticationOptions> id4ServiceAuthOpt = options => 
-            {
-                options.Authority = "http://localhost:5000";
-                options.RequireHttpsMetadata = false;
-                options.ApiName = "api1";
-            };
+            //Action<IdentityServerAuthenticationOptions> id4ServiceAuthOpt = options => 
+            //{
+            //    options.Authority = "http://localhost:64889";
+            //    options.RequireHttpsMetadata = false;
+            //    options.ApiName = "api1";
+            //    options.SupportedTokens = SupportedTokens.Both;
+            //};
             services
-                .AddAuthentication()
-                .AddIdentityServerAuthentication("IdentityBearer", id4ServiceAuthOpt);
+                .AddAuthentication("IdentityBearer")
+                .AddIdentityServerAuthentication("IdentityBearer", opt=> 
+                {
+                    opt.Authority = "http://localhost:64889";
+                    opt.RequireHttpsMetadata = false;
+                    opt.ApiName = "api1";
+                    opt.SupportedTokens = SupportedTokens.Both;
+                });
             #region 跨域配置
 
             services.AddCors(opt =>
@@ -97,6 +102,7 @@ namespace ApiGateway
                 c.DocumentTitle = "网关";
                
             });
+            app.UseAuthentication();
             app.UseCors("AllowAllOrigin");
             app.UseOcelot().Wait();
             app.UseMvc();

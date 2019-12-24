@@ -24,11 +24,11 @@ namespace Auth.Configs.IdentityServer
             {
                 context.Result = new GrantValidationResult(
                 subject: context.UserName,
-                authenticationMethod: "custom",
-                claims: new Claim[]
-                 {
+                authenticationMethod: "custom");//,
+                //claims: new Claim[]
+                // {
                     
-                }.ToList());
+                //}.ToList());
             }
             else
             {
